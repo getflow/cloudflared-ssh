@@ -12,4 +12,5 @@ RUN apt-get -y update && \
     apt-get update && apt-get install cloudflared 
      
 COPY ./.ssh_config /root/.ssh/config
+RUN chmod 600 /root/.ssh/* && chmod 700 /root/.ssh
 
