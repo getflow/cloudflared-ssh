@@ -2,7 +2,6 @@ FROM debian:bullseye
 
 ENV TOKEN_ID=
 ENV TOKEN_SECRET=
-ENV TARGET_HOSTNAME=
 
 RUN apt-get -y update && \
     apt-get install -y curl openssh-client git && \
