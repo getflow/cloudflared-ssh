@@ -1,0 +1,25 @@
+name: Mirroring
+
+on: [push, delete]
+
+jobs:
+  to_gitlab:
+    runs-on: ubuntu-latest
+    container:
+      image: getflow/cloudflared-ssh:latest
+      env:
+        TOKEN_ID: ${{ secrets.CLOUDFLARED_TOKEN_ID }}
+        TOKEN_SECRET: ${{ secrets.CLOUDFLARED_TOKEN_SECRET }}
+    steps:                                              # <-- must use actions/checkout before mirroring!
+      - uses: actions/checkout@v3.5.3
+        with:
+          fetch-depth: 0
+      - name: Setup ssh
+        run: |
+          echo "${{ secrets.GITLAB_MIRROR_BOT_KEY }}" > /root/.ssh/id_rsa
+          chmod 600 /root/.ssh/id_rsa
+      - name: Push to mirror
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git remote add mirror "${{ secrets.GITLAB_MIRROR_REPOSITORY }}"
+          git push --tags --force --prune mirror "refs/remotes/origin/*:refs/heads/*"
