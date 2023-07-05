@@ -12,7 +12,7 @@ readme:
  variables:
    DOCKER_USER: $DOCKER_HUB_USER
    DOCKER_PASS: $DOCKER_HUB_KEY
-   PUSHRM_SHORT: Image with cloudflared preinstalled and ssh configured for connecting to SSH endpoints behind Cloudflare
+   PUSHRM_SHORT: Image with cloudflared preinstalled and ssh configured
    PUSHRM_TARGET: docker.io/getflow/cloudflared-ssh
    PUSHRM_FILE: $CI_PROJECT_DIR/README.md
  script: "/bin/true"
