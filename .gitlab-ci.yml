@@ -18,7 +18,7 @@ readme:
  script: "/bin/true"
 
 
-build:
+build-debian:
   tags:
     - getflow
   stage: build
@@ -26,9 +26,22 @@ build:
   before_script:
     - echo $DOCKER_HUB_KEY | docker login -u $DOCKER_HUB_USER --password-stdin
   script:
-    - docker build -t getflow/cloudflared-ssh:latest .
-    - docker push getflow/cloudflared-ssh:latest 
+    - docker build -t getflow/cloudflared-ssh:latest -t getflow/cloudflared-ssh:debian .
+    - docker push getflow/cloudflared-ssh:latest getflow/cloudflared-ssh:debian
   after_script:
-    - docker rmi getflow/cloudflared-ssh:latest
+    - docker rmi getflow/cloudflared-ssh:latest getflow/cloudflared-ssh:debian
     - docker logout
 
+build-docker:
+  tags:
+    - getflow
+  stage: build
+  image: docker:latest
+  before_script:
+    - echo $DOCKER_HUB_KEY | docker login -u $DOCKER_HUB_USER --password-stdin
+  script:
+    - docker build -t getflow/cloudflared-ssh:docker --build-arg BASE_IMAGE=docker .
+    - docker push getflow/cloudflared-ssh:docker
+  after_script:
+    - docker rmi getflow/cloudflared-ssh:docker
+    - docker logout

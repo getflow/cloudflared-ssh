@@ -1,4 +1,5 @@
-FROM debian:bullseye
+ARG BASE_IMAGE=debian:bullseye
+FROM ${BASE_IMAGE}
 
 ENV TOKEN_ID=
 ENV TOKEN_SECRET=
