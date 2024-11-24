@@ -26,7 +26,7 @@ build-debian:
   before_script:
     - echo $DOCKER_HUB_KEY | docker login -u $DOCKER_HUB_USER --password-stdin
   script:
-    - docker build -t getflow/cloudflared-ssh:latest -t getflow/cloudflared-ssh:debian -f Dockerfile.debian.
+    - docker build -t getflow/cloudflared-ssh:latest -t getflow/cloudflared-ssh:debian -f Dockerfile.debian .
     - docker push getflow/cloudflared-ssh --all-tags
   after_script:
     - docker rmi getflow/cloudflared-ssh:latest getflow/cloudflared-ssh:debian
