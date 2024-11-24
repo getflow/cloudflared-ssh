@@ -1,0 +1,12 @@
+FROM docker
+
+ENV TOKEN_ID=
+ENV TOKEN_SECRET=
+
+RUN apk add curl openssh-client git && \
+    mkdir -p --mode=0755 /usr/share/keyrings && \
+    curl -L https://github.com/cloudflare/cloudflared/releases/download/2024.11.1/cloudflared-linux-amd64 -o /usr/bin/cloudflared && \
+    chmod +x /usr/bin/cloudflared
+     
+COPY ./.ssh_config /root/.ssh/config
+RUN chmod 600 /root/.ssh/* && chmod 700 /root/.ssh
