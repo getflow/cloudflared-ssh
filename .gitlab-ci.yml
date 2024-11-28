@@ -45,3 +45,17 @@ build-docker:
   after_script:
     - docker rmi getflow/cloudflared-ssh:docker
     - docker logout
+
+build-python:
+  tags:
+    - getflow
+  stage: build
+  image: docker:latest
+  before_script:
+    - echo $DOCKER_HUB_KEY | docker login -u $DOCKER_HUB_USER --password-stdin
+  script:
+    - docker build -t getflow/cloudflared-ssh:latest -t getflow/cloudflared-ssh:python -f Dockerfile.python .
+    - docker push getflow/cloudflared-ssh --all-tags
+  after_script:
+    - docker rmi getflow/cloudflared-ssh:latest getflow/cloudflared-ssh:python
+    - docker logout
